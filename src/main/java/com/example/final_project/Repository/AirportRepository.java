@@ -1,6 +1,6 @@
-package Repository;
+package com.example.final_project.Repository;
 
-import Entity.Airport;
+import com.example.final_project.Entity.Airport;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

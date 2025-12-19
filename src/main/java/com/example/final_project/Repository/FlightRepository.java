@@ -1,6 +1,6 @@
-package Reopsitory;
+package com.example.final_project.Repository;
 
-import Entity.Flight;
+import com.example.final_project.Entity.Flight;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
