@@ -1,0 +1,32 @@
+services:
+  aviation-backend:
+    container_name: 'AviationBackend'
+    image: 'daryn060817/my-aviation-repo-spring'
+    depends_on:
+      - db-service
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://db-service:5432/AviationDB
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=none
+      - SPRING_JPA_SHOW_SQL=true
+    ports:
+      - "8888:8080"
+  db-service:
+    container_name: 'AviationDB'
+    image: 'postgres'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=AviationDB
+    ports:
+      - "2345:5432"
+  test-db-service:
+    container_name: 'TestDB'
+    image: 'postgres'
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=TestDB
+    ports:
+      - "3245:5432"
