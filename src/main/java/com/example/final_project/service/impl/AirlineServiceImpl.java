@@ -36,16 +36,17 @@ public class AirlineServiceImpl implements AirlineService {
         Airline airline = airlineMapper.toEntity(airlineDto);
         Airline updateAirline = airlineRepository.findById(id).orElse(null);
 
-        updateAirline.setName(airline.getName());
-        updateAirline.setCountry(airline.getCountry());
-
-        return airlineMapper.toDto(airlineRepository.save(updateAirline));
+        if (updateAirline != null) {
+            updateAirline.setName(airline.getName());
+            updateAirline.setCountry(airline.getCountry());
+            return airlineMapper.toDto(airlineRepository.save(updateAirline));
+        }
+        return null;
     }
 
     @Override
     public boolean deleteById(Long id) {
         airlineRepository.deleteById(id);
-        Airline deletedAirline = airlineRepository.findById(id).orElse(null);
-        return deletedAirline == null;
+        return airlineRepository.findById(id).isEmpty();
     }
 }
