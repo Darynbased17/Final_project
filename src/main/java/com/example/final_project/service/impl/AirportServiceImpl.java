@@ -36,18 +36,19 @@ public class AirportServiceImpl implements AirportService {
         Airport airport = airportMapper.toEntity(airportDto);
         Airport updateAirport = airportRepository.findById(id).orElse(null);
 
-        updateAirport.setCode(airport.getCode());
-        updateAirport.setName(airport.getName());
-        updateAirport.setCity(airport.getCity());
-        updateAirport.setCountry(airport.getCountry());
-
-        return airportMapper.toDto(airportRepository.save(updateAirport));
+        if (updateAirport != null) {
+            updateAirport.setCode(airport.getCode());
+            updateAirport.setName(airport.getName());
+            updateAirport.setCity(airport.getCity());
+            updateAirport.setCountry(airport.getCountry());
+            return airportMapper.toDto(airportRepository.save(updateAirport));
+        }
+        return null;
     }
 
     @Override
     public boolean deleteById(Long id) {
         airportRepository.deleteById(id);
-        Airport deletedAirport = airportRepository.findById(id).orElse(null);
-        return deletedAirport == null;
+        return airportRepository.findById(id).isEmpty();
     }
 }
