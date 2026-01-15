@@ -14,6 +14,6 @@ public class FlightDto {
     private String statusDto;
     private String departureAirportCodeDto;
     private String arrivalAirportCodeDto;
-    private Long airlineIdDto;
-    private List<Long> airportIdsDto;
+    private AirlineDto airlineDto;
+    private List<AirportDto> airportsDto;
 }
