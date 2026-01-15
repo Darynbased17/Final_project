@@ -6,7 +6,7 @@ import java.util.List;
 public interface AirlineService {
     List<AirlineDto> getAll();
     AirlineDto getById(Long id);
-    AirlineDto addAirline(AirlineDto airline);
+    AirlineDto addAirline(AirlineDto airlineDto);
     AirlineDto updateById(Long id, AirlineDto airlineDto);
     boolean deleteById(Long id);
 }
