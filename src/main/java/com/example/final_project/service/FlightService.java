@@ -6,7 +6,7 @@ import java.util.List;
 public interface FlightService {
     List<FlightDto> getAll();
     FlightDto getById(Long id);
-    FlightDto addFlight(FlightDto flight);
+    FlightDto addFlight(FlightDto flightDto);
     FlightDto updateById(Long id, FlightDto flightDto);
     boolean deleteById(Long id);
 }
