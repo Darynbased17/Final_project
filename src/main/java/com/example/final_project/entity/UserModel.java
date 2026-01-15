@@ -14,7 +14,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")  // меняем таблицу на users
+@Table(name = "users")
 public class UserModel implements UserDetails {
 
     @Id
@@ -42,7 +42,6 @@ public class UserModel implements UserDetails {
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return permissions;
     }
-
     @Override
     public String getPassword() {
         return password;
@@ -66,5 +65,10 @@ public class UserModel implements UserDetails {
     @Override
     public boolean isEnabled() {
         return true;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
     }
 }
