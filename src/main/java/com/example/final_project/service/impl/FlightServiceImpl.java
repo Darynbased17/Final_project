@@ -36,20 +36,22 @@ public class FlightServiceImpl implements FlightService {
         Flight flight = flightMapper.toEntity(flightDto);
         Flight updateFlight = flightRepository.findById(id).orElse(null);
 
-        updateFlight.setFlightNumber(flight.getFlightNumber());
-        updateFlight.setStatus(flight.getStatus());
-        updateFlight.setDepartureAirportCode(flight.getDepartureAirportCode());
-        updateFlight.setArrivalAirportCode(flight.getArrivalAirportCode());
-        updateFlight.setAirline(flight.getAirline());
-        updateFlight.setAirports(flight.getAirports());
+        if (updateFlight != null) {
+            updateFlight.setFlightNumber(flight.getFlightNumber());
+            updateFlight.setStatus(flight.getStatus());
+            updateFlight.setDepartureAirportCode(flight.getDepartureAirportCode());
+            updateFlight.setArrivalAirportCode(flight.getArrivalAirportCode());
+            updateFlight.setAirline(flight.getAirline());
+            updateFlight.setAirports(flight.getAirports());
 
-        return flightMapper.toDto(flightRepository.save(updateFlight));
+            return flightMapper.toDto(flightRepository.save(updateFlight));
+        }
+        return null;
     }
 
     @Override
     public boolean deleteById(Long id) {
         flightRepository.deleteById(id);
-        Flight deletedFlight = flightRepository.findById(id).orElse(null);
-        return deletedFlight == null;
+        return flightRepository.findById(id).isEmpty();
     }
 }
