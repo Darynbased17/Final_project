@@ -23,7 +23,11 @@ public class FlightController {
     @GetMapping("/{id}")
     public ResponseEntity<FlightDto> getById(@PathVariable("id") Long id) {
         FlightDto flightDto = flightService.getById(id);
-        return flightDto != null ? ResponseEntity.ok(flightDto) : ResponseEntity.notFound().build();
+        if (flightDto != null) {
+            return ResponseEntity.ok(flightDto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
@@ -34,12 +38,20 @@ public class FlightController {
     @PutMapping("/{id}")
     public ResponseEntity<FlightDto> updateById(@PathVariable("id") Long id, @RequestBody FlightDto flightDto) {
         FlightDto updatedFlightDto = flightService.updateById(id, flightDto);
-        return updatedFlightDto != null ? ResponseEntity.ok(updatedFlightDto) : ResponseEntity.badRequest().build();
+        if (updatedFlightDto != null) {
+            return ResponseEntity.ok(updatedFlightDto);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<FlightDto> deleteById(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable("id") Long id) {
         boolean isDeleted = flightService.deleteById(id);
-        return isDeleted ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
+        if (isDeleted) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }

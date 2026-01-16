@@ -23,7 +23,11 @@ public class AirlineController {
     @GetMapping("/{id}")
     public ResponseEntity<AirlineDto> getById(@PathVariable("id") Long id) {
         AirlineDto airlineDto = airlineService.getById(id);
-        return airlineDto != null ? ResponseEntity.ok(airlineDto) : ResponseEntity.notFound().build();
+        if (airlineDto != null) {
+            return ResponseEntity.ok(airlineDto);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping
@@ -34,12 +38,20 @@ public class AirlineController {
     @PutMapping("/{id}")
     public ResponseEntity<AirlineDto> updateById(@PathVariable("id") Long id, @RequestBody AirlineDto airlineDto) {
         AirlineDto updatedAirlineDto = airlineService.updateById(id, airlineDto);
-        return updatedAirlineDto != null ? ResponseEntity.ok(updatedAirlineDto) : ResponseEntity.badRequest().build();
+        if (updatedAirlineDto != null) {
+            return ResponseEntity.ok(updatedAirlineDto);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<AirlineDto> deleteById(@PathVariable("id") Long id) {
+    public ResponseEntity<Void> deleteById(@PathVariable("id") Long id) {
         boolean isDeleted = airlineService.deleteById(id);
-        return isDeleted ? ResponseEntity.ok().build() : ResponseEntity.badRequest().build();
+        if (isDeleted) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
