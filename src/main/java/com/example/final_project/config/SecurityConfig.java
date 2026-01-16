@@ -22,25 +22,19 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http.csrf(csrf -> csrf.disable())
-                .authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
+        http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
                         .requestMatchers(
-                                "/auth/**",
-                                "/airlines",
-                                "/airports",
-                                "/flights"
-                        ).permitAll()
-
-                        .requestMatchers(
+                                "/auth/register",
                                 "/airlines/**",
                                 "/airports/**",
                                 "/flights/**"
-                        ).hasAuthority("ROLE_ADMIN")
-
+                        ).permitAll()
                         .anyRequest().authenticated()
-                );
+                )
+                .httpBasic(Customizer.withDefaults());
 
-        http.httpBasic(Customizer.withDefaults());
         return http.build();
     }
 }

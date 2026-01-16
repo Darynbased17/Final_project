@@ -1,5 +1,8 @@
 package com.example.final_project.controller;
 
+import com.example.final_project.dto.AirlineDto;
+import com.example.final_project.dto.AirportDto;
+import com.example.final_project.dto.FlightDto;
 import com.example.final_project.dto.UserModelDto;
 import com.example.final_project.entity.UserModel;
 import com.example.final_project.service.AirlineService;
@@ -33,55 +36,85 @@ public class UserApi {
 
     @PostMapping("/airline/add")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> addAirline(@RequestBody Object airlineDto) {
-        return ResponseEntity.ok("Airline added (admin only)");
+    public ResponseEntity<?> addAirline(@RequestBody AirlineDto airlineDto) {
+        return ResponseEntity.ok(airlineService.addAirline(airlineDto));
     }
 
     @PostMapping("/airport/add")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> addAirport(@RequestBody Object airportDto) {
-        return ResponseEntity.ok("Airport added (admin only)");
+    public ResponseEntity<?> addAirport(@RequestBody AirportDto airportDto) {
+        return ResponseEntity.ok(airportService.addAirport(airportDto));
     }
 
     @PostMapping("/flight/add")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> addFlight(@RequestBody Object flightDto) {
-        return ResponseEntity.ok("Flight added (admin only)");
-    }
+    public ResponseEntity<?> addFlight(@RequestBody FlightDto flightDto) {
+        return ResponseEntity.ok(flightService.addFlight(flightDto));
 
+    }
     @PutMapping("/airline/update/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> updateAirline(@PathVariable("id") Long id, @RequestBody Object airlineDto) {
-        return ResponseEntity.ok("Airline updated (admin only)");
+    public ResponseEntity<?> updateAirline(@PathVariable("id") Long id, @RequestBody AirlineDto airlineDto) {
+        AirlineDto updatedAirlineDto = airlineService.updateById(id, airlineDto);
+        if (updatedAirlineDto != null) {
+            return ResponseEntity.ok(updatedAirlineDto);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/airport/update/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> updateAirport(@PathVariable("id") Long id, @RequestBody Object airportDto) {
-        return ResponseEntity.ok("Airport updated (admin only)");
+    public ResponseEntity<?> updateAirport(@PathVariable("id") Long id, @RequestBody AirportDto airportDto) {
+        AirportDto updatedAirportDto = airportService.updateById(id, airportDto);
+        if (updatedAirportDto != null) {
+            return ResponseEntity.ok(updatedAirportDto);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/flight/update/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<?> updateFlight(@PathVariable("id") Long id, @RequestBody Object flightDto) {
-        return ResponseEntity.ok("Flight updated (admin only)");
+    public ResponseEntity<?> updateFlight(@PathVariable("id") Long id, @RequestBody FlightDto flightDto) {
+        FlightDto updatedFlightDto = flightService.updateById(id, flightDto);
+        if (updatedFlightDto != null) {
+            return ResponseEntity.ok(updatedFlightDto);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping("/airline/delete/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteAirline(@PathVariable("id") Long id) {
-        return ResponseEntity.ok("Airline deleted (admin only)");
+        boolean isDeleted = airlineService.deleteById(id);
+        if (isDeleted) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping("/airport/delete/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteAirport(@PathVariable("id") Long id) {
-        return ResponseEntity.ok("Airport deleted (admin only)");
+        boolean isDeleted = airportService.deleteById(id);
+        if (isDeleted) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @DeleteMapping("/flight/delete/{id}")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<?> deleteFlight(@PathVariable("id") Long id) {
-        return ResponseEntity.ok("Flight deleted (admin only)");
+        boolean isDeleted = flightService.deleteById(id);
+        if (isDeleted) {
+            return ResponseEntity.ok().build();
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
     }
 }
